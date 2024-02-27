@@ -146,10 +146,54 @@ if uploaded_file1 is not None and uploaded_file2 is not None:
 #     graph.close()
 #     result.close()
     
-        
+
+    imsi1 = []
+    a1 = []
+    b1 = []
+    c1 = []
+
+    content1 = graph_.split('\n')[:-1]
+    print(content1[0])
+    
+    i = 0
+    for line in content1:
+        imsi1 = content1[i].split(',')
+        print(imsi1)
+        a1.append(float(imsi1[0]))
+        b1.append(float(imsi1[1]))
+        c1.append(float(imsi1[2]))
+        i += 1
+    
+    fig, ax = plt.subplots(figsize=(18,6))
+    # x축에는 query 순서값, y축에는 sbert score값을 표시한다.
+    plt.plot(b1, a1, color = 'red', marker = 'o', linestyle = 'solid', label='Sentence BERT')
+    plt.axhline(0.75, 0.01, 0.99, color='blue', linestyle='--', linewidth=1)
+    # plt.hlines(0.7, 1.0, 66.0, color='green', linestyle='--', linewidth=1) # solid
+    plt.xticks(np.arange(1, i+1, 1))
+    plt.yticks(np.arange(0.3, 1.2, 0.1))
+    plt.legend()
+
+    # 제목을 설정
+    plt.title('Top similar sentence in corpus') # corpus(rfp01)중에서 query(rfp01)와 가장 유사한 문장
+
+    plt.ylabel('Score')
+    plt.xlabel('No. of Query')
+    plt.savefig('graph_Result.png', dpi = 1200)
+
+    
     st.write(str(time.time()-start)+" sec")
     st.download_button('Download Result File', result_, file_name="result_"+now.strftime('%Y%m%d%H%M')+".txt")
-    st.download_button('Download Graph File', graph_, file_name="graph_"+now.strftime('%Y%m%d%H%M')+".txt")
+
+    with open("graph_Result.png", "rb") as file:
+        btn = st.download_button(
+                label="Download Graph image",
+                data=file,
+                file_name="graph_"+now.strftime('%Y%m%d%H%M')+".png",
+                mime="image/png"
+              )
+
+
+    # st.download_button('Download Graph File', graph_, file_name="graph_"+now.strftime('%Y%m%d%H%M')+".txt")
 
     
     # if st.button('Result File Download'):
