@@ -21,7 +21,6 @@ st.title('Similarity Measurement_v0.1')
 st.write("---")
 
 uploaded_file1 = st.file_uploader("Choose a file 1")
-st.write("---")
 uploaded_file2 = st.file_uploader("Choose a file 2")
 st.write("---")
 
