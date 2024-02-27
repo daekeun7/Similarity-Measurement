@@ -68,76 +68,78 @@ if uploaded_file1 is not None and uploaded_file2 is not None:
     queries = file2
         
     if(str(uploaded_file1.name) == str(uploaded_file2.name)) : 
-        st.write(str(uploaded_file1.name) + " == " + str(uploaded_file2.name))
-        top_k = 7
-        c1 = 0
-        q = 1
-        
-        
-        for query in queries:
-            query_embedding = embedder.encode(query, convert_to_tensor=True)
-            cos_scores = util.pytorch_cos_sim(query_embedding, corpus_embeddings)[0]
-            cos_scores = cos_scores.cpu()
-
-            top_results = np.argpartition(-cos_scores, range(top_k))[0:top_k]
-
-#             print("\n\n======================\n", file = result)
-#             print("Query(%i):" %(q), query + "\n", file = result)
-            
-            result_+=("\n\n======================\n")
-            result_+=("Query(" + str(q) + "):" + str(query) + "\n")
-            result_+='\n'
-
-            for idx in top_results[0:top_k]:
-                if q != idx+1:
-                    
-#                     print("Corpus(%i): " %(idx+1) + corpus[idx].strip(), "(Score: %.4f)" % (cos_scores[idx]), file = result)
-                    result_+=("Corpus(" + str(idx.item()+1) + "):" + str(corpus[idx].strip()) + " (Score: " + str(cos_scores[idx].item()) + " )")
-                    result_+='\n'
-
-                    if c1 == 0:
-#                         print("%.4f, %i, %i" %(cos_scores[idx], q, idx), file = graph)
-                        graph_+=(str(cos_scores[idx].item()) + "," +  str(q) + "," + str(idx.item()))
-                        graph_+='\n'
-                        c1 += 1
-
+        with st.spinner('Wait for it...'):
+            st.write(str(uploaded_file1.name) + " == " + str(uploaded_file2.name))
+            top_k = 7
             c1 = 0
-            q += 1
+            q = 1
+            
+            
+            for query in queries:
+                query_embedding = embedder.encode(query, convert_to_tensor=True)
+                cos_scores = util.pytorch_cos_sim(query_embedding, corpus_embeddings)[0]
+                cos_scores = cos_scores.cpu()
+    
+                top_results = np.argpartition(-cos_scores, range(top_k))[0:top_k]
+    
+    #             print("\n\n======================\n", file = result)
+    #             print("Query(%i):" %(q), query + "\n", file = result)
+                
+                result_+=("\n\n======================\n")
+                result_+=("Query(" + str(q) + "):" + str(query) + "\n")
+                result_+='\n'
+    
+                for idx in top_results[0:top_k]:
+                    if q != idx+1:
+                        
+    #                     print("Corpus(%i): " %(idx+1) + corpus[idx].strip(), "(Score: %.4f)" % (cos_scores[idx]), file = result)
+                        result_+=("Corpus(" + str(idx.item()+1) + "):" + str(corpus[idx].strip()) + " (Score: " + str(cos_scores[idx].item()) + " )")
+                        result_+='\n'
+    
+                        if c1 == 0:
+    #                         print("%.4f, %i, %i" %(cos_scores[idx], q, idx), file = graph)
+                            graph_+=(str(cos_scores[idx].item()) + "," +  str(q) + "," + str(idx.item()))
+                            graph_+='\n'
+                            c1 += 1
+    
+                c1 = 0
+                q += 1
     
     
     else : 
-        st.write(str(uploaded_file1.name) + " != " + str(uploaded_file2.name))
-        
-        top_k = 3
-        c1 = 0
-        q = 1
-
-        for query in queries:
-            query_embedding = embedder.encode(query, convert_to_tensor=True)
-            cos_scores = util.pytorch_cos_sim(query_embedding, corpus_embeddings)[0]
-            cos_scores = cos_scores.cpu()
-
-            top_results = np.argpartition(-cos_scores, range(top_k))[0:top_k]
-
-#             print("\n\n======================\n", file = result)
-#             print("Query(%i):" %(q), query + "\n", file = result)
+        with st.spinner('Wait for it...'):
+            st.write(str(uploaded_file1.name) + " != " + str(uploaded_file2.name))
             
-            result_+=("\n\n======================\n")
-            result_+=("Query(" + str(q) + "):" + str(query) + "\n")
-            result_+='\n'
-            for idx in top_results[0:top_k]:
-#                 print("Corpus(%i): " %(idx+1) + corpus[idx].strip(), "(Score: %.4f)" % (cos_scores[idx]), file = result)
-                result_+=("Corpus(" + str(idx.item()+1) + "):" + str(corpus[idx].strip()) + " (Score: " + str(cos_scores[idx].item()) + " )")
-                result_+='\n'
-                
-                if c1 == 0:
-#                     print("%.4f, %i, %i" %(cos_scores[idx], q, idx), file = graph)
-                    graph_+=(str(cos_scores[idx].item()) + "," +  str(q) + "," + str(idx.item()))
-                    graph_+='\n'
-
-                    c1 += 1
+            top_k = 3
             c1 = 0
-            q += 1
+            q = 1
+    
+            for query in queries:
+                query_embedding = embedder.encode(query, convert_to_tensor=True)
+                cos_scores = util.pytorch_cos_sim(query_embedding, corpus_embeddings)[0]
+                cos_scores = cos_scores.cpu()
+    
+                top_results = np.argpartition(-cos_scores, range(top_k))[0:top_k]
+    
+    #             print("\n\n======================\n", file = result)
+    #             print("Query(%i):" %(q), query + "\n", file = result)
+                
+                result_+=("\n\n======================\n")
+                result_+=("Query(" + str(q) + "):" + str(query) + "\n")
+                result_+='\n'
+                for idx in top_results[0:top_k]:
+    #                 print("Corpus(%i): " %(idx+1) + corpus[idx].strip(), "(Score: %.4f)" % (cos_scores[idx]), file = result)
+                    result_+=("Corpus(" + str(idx.item()+1) + "):" + str(corpus[idx].strip()) + " (Score: " + str(cos_scores[idx].item()) + " )")
+                    result_+='\n'
+                    
+                    if c1 == 0:
+    #                     print("%.4f, %i, %i" %(cos_scores[idx], q, idx), file = graph)
+                        graph_+=(str(cos_scores[idx].item()) + "," +  str(q) + "," + str(idx.item()))
+                        graph_+='\n'
+    
+                        c1 += 1
+                c1 = 0
+                q += 1
                 
 #     graph.close()
 #     result.close()
