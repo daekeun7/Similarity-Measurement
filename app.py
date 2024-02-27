@@ -17,7 +17,7 @@ now = datetime.now()
 start = time.time()
 
 
-st.title('DATALAB STT TEST')
+st.title('Similarity-Measurement v0.1 by gkim at AIRI')
 
 uploaded_file1 = st.file_uploader("Choose a file 1")
 uploaded_file2 = st.file_uploader("Choose a file 2")
