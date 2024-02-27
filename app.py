@@ -17,10 +17,13 @@ now = datetime.now()
 start = time.time()
 
 
-st.title('Similarity-Measurement v0.1 by gkim at AIRI')
+st.title('Similarity Measurement_v0.1')
+st.write("---")
 
 uploaded_file1 = st.file_uploader("Choose a file 1")
+st.write("---")
 uploaded_file2 = st.file_uploader("Choose a file 2")
+st.write("---")
 
 if uploaded_file1 is not None and uploaded_file2 is not None:
     
