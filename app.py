@@ -21,7 +21,7 @@ now = datetime.now()
 start = time.time()
 
 
-st.title('DATALAB STT TEST')
+st.title('Similarity-Measurement_v0.1')
 
 st.write("---")
 
