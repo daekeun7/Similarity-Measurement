@@ -1,4 +1,3 @@
 sentence_transformers
 ko_sentence_transformers
 matplotlib
-streamlit==1.4.0
